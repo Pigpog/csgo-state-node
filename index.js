@@ -1,0 +1,9 @@
+module.exports={
+	Client:require("./src/structures/Client.js"),
+	Player:require("./src/structures/Player.js"),
+	Weapon:require("./src/structures/Weapon.js"),
+	Match:require("./src/structures/Match.js"),
+	PaintKit:require("./src/structures/PaintKit.js"),
+	PlayerState:require("./src/structures/PlayerState.js"),
+	Provider:require("./src/structures/Provider.js")
+}

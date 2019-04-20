@@ -1,0 +1,24 @@
+{
+  "name": "csgo-state-integration",
+  "version": "1.0.0",
+  "description": "Module for CSGO state integration",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pigpog/csgo-state-integration.git"
+  },
+  "keywords": [
+    "counterstrike",
+    "csgo",
+    "valve"
+  ],
+  "author": "Pigpog",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Pigpog/csgo-state-integration/issues"
+  },
+  "homepage": "https://github.com/Pigpog/csgo-state-integration#readme"
+}
