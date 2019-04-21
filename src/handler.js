@@ -23,17 +23,23 @@ module.exports = function(body,client){
             }
             if(client.player.state && client.player.state.isAlive && oldPlayer){
                 if(client.player.matchStats.kills>oldPlayer.matchStats.kills){
-                    client.emit('kill',client.player.matchStats, oldPlayer.matchStats)
+                    client.emit('kill',client.player, oldPlayer)
                 }else if(client.player.matchStats.kills<oldPlayer.matchStats.kills){
                     if(client.player.matchStats.deaths>oldPlayer.matchStats.deaths){
                         client.emit('suicide')
                     }
                 }
                 if(client.player.matchStats.assists>oldPlayer.matchStats.assists){
-                    client.emit('assist',client.player.matchStats, oldPlayer.matchStats)
+                    client.emit('assist',client.player, oldPlayer)
                 }
                 if(client.player.matchStats.mvps>oldPlayer.matchStats.mvps){
-                    client.emit('mvp',client.player.matchStats, oldPlayer.matchStats)
+                    client.emit('mvp',client.player, oldPlayer)
+                }
+                if(client.player.state.roundKillHs>oldPlayer.state.roundKillHs){
+                    if(client.player.matchStats.kills>oldPlayer.matchStats.kills){
+                        client.emit('headshotKill',client.player, oldPlayer)
+                    }
+                    client.emit('headshot',client.player, oldPlayer)
                 }
                 if(client.player.state.health !== oldPlayer.state.health){
                     client.emit('healthChange', client.player, oldPlayer)

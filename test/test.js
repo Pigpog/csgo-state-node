@@ -2,7 +2,7 @@ const Csgo = require("../index.js")
 const client = new Csgo.Client()
 
 client.once("listening",()=>{
-	console.log("Bleastr")
+	console.log("Started Listening")
 })
 client.listen({port:3000,host:"127.0.0.1"})
 
@@ -11,11 +11,7 @@ client.on("fire",(newWeapon, oldWeapon)=>{
 })
 
 client.on("reload",(newWeapon, oldWeapon)=>{
-	console.log("Reloaded")
-})
-
-client.on("newData",()=>{
-	//console.log("new data")
+	console.log("Reloaded "+newWeapon.resolveName())
 })
 
 client.on("healthChange",(newPlayer,oldPlayer)=>{
@@ -44,11 +40,19 @@ client.on("spawn",()=>{
 	console.log("Spawned")
 })
 
-client.on('kill',(matchStats)=>{
-	console.log("Got a kill")
+client.on('kill',(newPlayer,oldPlayer)=>{
+	console.log("Got a kill using "+newPlayer.activeWeapon.resolveName())
 })
 
-client.on('assist',(matchStats)=>{
+client.on('headshot',(newPlayer,oldPlayer)=>{
+	console.log("Got a headshot using "+newPlayer.activeWeapon.resolveName())
+})
+
+client.on('headshotKill',(newPlayer,oldPlayer)=>{
+	console.log("Killed with a headshot using "+newPlayer.activeWeapon.resolveName())
+})
+
+client.on('assist',(newPlayer,oldPlayer)=>{
 	console.log("Got an assist")
 })
 

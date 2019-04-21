@@ -15,9 +15,13 @@ class Player {
         this.state = new PlayerState(data.state);
         this.weapons = new Array();
         this.weaponIds = new Array();
+        this.activeWeapon;
         for(var weapon in data.weapons){
             this.weapons.push(new Weapon(data.weapons[weapon]));
             this.weaponIds.push(weapon)
+            if(data.weapons[weapon].state==="active" || data.weapons[weapon].state==="reloading"){
+                this.activeWeapon=this.weapons[this.weapons.length-1];
+            }
         }
         this.matchStats=data.match_stats;
         this.state.isAlive;
