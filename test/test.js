@@ -20,6 +20,14 @@ client.on("healthChange",(newPlayer,oldPlayer)=>{
 	}
 })
 
+client.on('moneyChange', (newMoney, oldMoney)=>{
+	if(newMoney>oldMoney){
+		console.log("Got paid $"+(newMoney-oldMoney))
+	}else{
+		console.log("Spent $"+(oldMoney-newMoney))
+	}
+})
+
 client.on('bombPlanted',()=>{
 	if(client.player.team==="T"){
 		console.log("The bomb has been planted. Good job.")
@@ -42,6 +50,10 @@ client.on("spawn",()=>{
 
 client.on('kill',(newPlayer,oldPlayer)=>{
 	console.log("Got a kill using "+newPlayer.activeWeapon.resolveName())
+})
+
+client.on('flashed',(newPlayer,oldPlayer)=>{
+	console.log("Got flashed "+newPlayer.state.flashed)
 })
 
 client.on('headshot',(newPlayer,oldPlayer)=>{

@@ -14,17 +14,17 @@ module.exports = function(body,client){
             var oldPlayer = client.player;
             client.player = new Player(data.player);
             client.player.state.isAlive = (client.player.steamId === client.provider.steamId && client.player.state.health>0) || client.includeSpectator
-            if(client.player.state.isAlive!==oldPlayer.state.isAlive){
-                if(client.player.state.isAlive){
+            if(client.player.state.isAlive!==oldPlayer.state.isAlive && oldPlayer.state.isAlive!==undefined){
+                if(client.player.state.isAlive && client.player.state.health===100){
                     client.emit("spawn")
                 }else{
                     client.emit("death")
                 }
             }
             if(client.player.state && client.player.state.isAlive && oldPlayer){
-                if(client.player.matchStats.kills>oldPlayer.matchStats.kills){
+                if(client.player.matchStats.kills>oldPlayer.matchStats.kills && oldPlayer.matchStats.kills!==undefined){
                     client.emit('kill',client.player, oldPlayer)
-                }else if(client.player.matchStats.kills<oldPlayer.matchStats.kills){
+                }else if(client.player.matchStats.kills<oldPlayer.matchStats.kills && oldPlayer.matchStats.kills!==undefined){
                     if(client.player.matchStats.deaths>oldPlayer.matchStats.deaths){
                         client.emit('suicide')
                     }
@@ -32,16 +32,16 @@ module.exports = function(body,client){
                 if(client.player.matchStats.assists>oldPlayer.matchStats.assists){
                     client.emit('assist',client.player, oldPlayer)
                 }
-                if(client.player.matchStats.mvps>oldPlayer.matchStats.mvps){
+                if(client.player.matchStats.mvps>oldPlayer.matchStats.mvps && oldPlayer.matchStats.mvps!==undefined){
                     client.emit('mvp',client.player, oldPlayer)
                 }
-                if(client.player.state.roundKillHs>oldPlayer.state.roundKillHs){
+                if(client.player.state.roundKillHs>oldPlayer.state.roundKillHs && oldPlayer.state.roundKillHs!==undefined){
                     if(client.player.matchStats.kills>oldPlayer.matchStats.kills){
                         client.emit('headshotKill',client.player, oldPlayer)
                     }
                     client.emit('headshot',client.player, oldPlayer)
                 }
-                if(client.player.state.health !== oldPlayer.state.health){
+                if(client.player.state.health !== oldPlayer.state.health && oldPlayer.state.health!==undefined){
                     client.emit('healthChange', client.player, oldPlayer)
                 }
                 if(client.player.state.armor !== oldPlayer.state.armor){
@@ -49,6 +49,9 @@ module.exports = function(body,client){
                 }
                 if(client.player.state.money !== oldPlayer.state.money){
                     client.emit('moneyChange', client.player.state.money, oldPlayer.state.money)
+                }
+                if(client.player.state.flashed> oldPlayer.state.flashed){
+                    client.emit('flashed', client.player, oldPlayer)
                 }
                 if(oldPlayer.weapons!==client.player.weapons){
                     client.emit('weaponChange', client.player.weapons, oldPlayer.weapons)
